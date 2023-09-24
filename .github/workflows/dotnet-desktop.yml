@@ -1,0 +1,28 @@
+name: .NET Framework Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.1
+
+    - name: Build solution
+      run: |
+        msbuild /p:Configuration=Release ScriptGraphicHelper.sln
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        path: .
